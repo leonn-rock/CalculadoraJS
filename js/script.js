@@ -5,6 +5,7 @@ var identificador = true
 var operador = ""
 var result = 0
 var cliquePonto = false
+var tema = false
 
 function verifica(){
     if (identificador==true){
@@ -17,6 +18,15 @@ function verifica(){
 function exibe(fator){
     verifica()
     document.querySelector("#tela").textContent = parseFloat(fator.join(""))
+}
+function estilo(){
+    if(tema == false){
+        document.body.style.backgroundColor = "#121212"
+        tema = true
+    } else{
+        document.body.style.backgroundColor = "#ffffff"
+        tema = false
+    }
 }
 function addNum(num){
     verifica()
