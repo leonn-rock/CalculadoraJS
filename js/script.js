@@ -1,5 +1,6 @@
 var A = []
 var B = []
+var num1, num2
 var y = []
 var identificador = true
 var operador = ""
@@ -8,6 +9,8 @@ var cliquePonto = false
 var tema = false
 var limitador = 8
 var rad = false
+
+document.body.onload(estilo())
 
 function modo(){
     var divCalculadora = document.querySelector("#calc")
@@ -39,33 +42,41 @@ function exibe(fator){
     document.querySelector("#tela").textContent = parseFloat(fator.join(""))
 }
 function trocaTipo(){
+    var botaoDeg = document.querySelector("#botaoDeg")
     var tipo = document.querySelector("#tipo")
     if(rad == true){
         rad = false
         tipo.textContent = "DEG"
+        botaoDeg.textContent = "Rad"
     }else{
         rad = true
         tipo.textContent = "RAD"
+        botaoDeg.textContent = "Deg"
     }
 }
 function tipo(){
-    if (rad == false){
-        num1 = num1 * Math.PI
-        num2 = num2 * Math.PI
+    if (rad == false && (operador == 10 || operador == 11 || operador == 12)){
+        num1 = (num1 * Math.PI) /180
     }
 }
 function estilo(){
+    var botaoLuz = document.querySelector("#botaoLuz")
     if(tema == false){
         document.body.style.backgroundColor = "#121212"
         tema = true
+        botaoLuz.style = 'background-image: url("images/sol.svg")'
+        botaoLuz.classList.remove("itemPI")
+        botaoLuz.classList.add("itemP")
     } else{
         document.body.style.backgroundColor = "#ffffff"
         tema = false
+        botaoLuz.style = 'background-image: url("images/lua.svg")'
+        botaoLuz.classList.remove("itemP")
+        botaoLuz.classList.add("itemPI")
     }
 }
 function addNum(num){
     verifica()
-    console.log(y.length < 8)
     if (y.length <8 ){
          y.push(num)
     }
@@ -77,13 +88,13 @@ function ponto(){
         y.push(".")
         cliquePonto = true
     }    
-    console.log(cliquePonto)
 }
+
 function operacao(aux){
     identificador = false
     cliquePonto = false
     operador = aux.toString()
-    if( aux == 5 || aux == 6 || aux == 8 || aux == 10 || aux == 11 || aux == 12 || aux == 13){
+    if( aux == 5 || aux == 6 || aux == 8 || aux == 10 || aux == 11 || aux == 12){
         igual()
     }
 }
@@ -95,8 +106,8 @@ function verificaPonto(){
 }
 function igual(){
     
-    var num1 = parseFloat(A.join(""))
-    var num2 = parseFloat(B.join(""))
+    num1 = parseFloat(A.join(""))
+    num2 = parseFloat(B.join(""))
     
     if (A.length == 0){
         num1 = result
@@ -105,7 +116,8 @@ function igual(){
         num2 = 0
     }
 
-    console.log(num1)
+    tipo()
+
     switch (operador) {
         case '1':
             result = num1 + num2
